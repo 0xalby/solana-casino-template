@@ -1,6 +1,26 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { ConfigProvider } from "@/context/config";
+import type { AppProps } from "next/app";
+import React from "react";
+import Wallet from "./_wallet";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import "@/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
+require("@solana/wallet-adapter-react-ui/styles.css");
+require("../styles/globals.css");
+
+export default function App(props: AppProps) {
+  return (
+    <ConfigProvider>
+      <Wallet {...props} />
+      <ToastContainer
+        position="bottom-center"
+        hideProgressBar
+        draggable={false}
+        closeButton={false}
+        autoClose={2000}
+      />
+    </ConfigProvider>
+  );
 }

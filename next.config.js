@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         source: '/api/game/:path*',
-        source: '/api/game/:path*'
+        destination: '/api/game/:path*'
       }
     ]
 

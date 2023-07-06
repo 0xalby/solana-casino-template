@@ -13,6 +13,7 @@ export const airdrop = async (
   amount: number,
   address: string
 ): Promise<string> => {
+  try {
   const connection = new Connection(config.SOLANA_RPC, "confirmed");
   const transaction = new Transaction();
   transaction.add(
@@ -31,4 +32,7 @@ export const airdrop = async (
     }
   );
   return txid;
+  } catch {
+    throw Error('error transfering sol');
+  }
 };

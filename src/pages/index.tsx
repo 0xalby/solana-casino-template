@@ -1,6 +1,16 @@
-import Head from 'next/head'
+import { useConfig } from "@/context/config";
+import { useCoinflip } from "@/context/games/coinflip";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import Head from "next/head";
 
 export default function Home() {
+  const { connected } = useWallet();
+  const { data } = useConfig();
+  const { status, amount, win, txid, setAmount, setChoice, flip, reset } =
+    useCoinflip();
+
   return (
     <>
       <Head>
@@ -10,9 +20,37 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-
-  
+        <WalletMultiButton />
+        <hr />
+        {connected && (
+          <div>
+            <h2>Coinflip</h2>
+            <hr />
+            <div>
+              <p>selected amount: {amount / LAMPORTS_PER_SOL}</p>
+              {data.GAMES.COINFLIP.AMOUNTS.map((amount) => (
+                <button
+                  onClick={() => setAmount(amount)}
+                  disabled={status == "deciding"}
+                >
+                  {amount / LAMPORTS_PER_SOL}
+                </button>
+              ))}
+            </div>
+            <hr />
+            <div>
+              <button disabled={status == "deciding"} onClick={() => flip()}>
+                flip
+              </button>
+              {status == "completed" && (
+                <button onClick={() => reset()}>reset</button>
+              )}
+            </div>
+            <hr />
+            <p style={{ color: "gray" }}>status: {status}</p>
+          </div>
+        )}
       </main>
     </>
-  )
+  );
 }
