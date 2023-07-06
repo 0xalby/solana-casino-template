@@ -3,12 +3,11 @@ import type { AppProps } from "next/app";
 import React from "react";
 import Wallet from "./_wallet";
 
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
-require("../styles/globals.css");
 
 export default function App(props: AppProps) {
   return (
