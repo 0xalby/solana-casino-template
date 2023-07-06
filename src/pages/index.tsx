@@ -75,7 +75,7 @@ export default function Home() {
                           <SkewLoader color="black" />
                         </>
                       ) : (
-                        <>{status == "completed" ? 'NICE' : 'DOUBLE OR NOTHING'}</>
+                        <>{status == "completed" ? `${win ? 'YAY :)' : 'OKAY : ('}` : 'DOUBLE OR NOTHING'}</>
                       )}
                     </div>
                   </div>
