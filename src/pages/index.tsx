@@ -10,7 +10,6 @@ export default function Home() {
   const { data } = useConfig();
   const { status, amount, win, txid, setAmount, setChoice, flip, reset } =
     useCoinflip();
-
   return (
     <>
       <Head>
@@ -31,7 +30,7 @@ export default function Home() {
               {data.GAMES.COINFLIP.AMOUNTS.map((amount) => (
                 <button
                   onClick={() => setAmount(amount)}
-                  disabled={status == "deciding"}
+                  disabled={status !== "initialized"}
                 >
                   {amount / LAMPORTS_PER_SOL}
                 </button>
@@ -39,11 +38,11 @@ export default function Home() {
             </div>
             <hr />
             <div>
-              <button disabled={status == "deciding"} onClick={() => flip()}>
-                flip
-              </button>
+              {status == "initialized" && (
+                <button onClick={() => flip()}>flip</button>
+              )}
               {status == "completed" && (
-                <button onClick={() => reset()}>reset</button>
+                <button onClick={() => reset()}>okay</button>
               )}
             </div>
             <hr />
