@@ -7,13 +7,12 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import styles from "@/styles/Home.module.scss";
 import Head from "next/head";
 import { SkewLoader } from "react-spinners";
-
+ 
 
 export default function Home() {
   const { connected } = useWallet();
   const { data } = useConfig();
-  const { status, amount, win, txid, setAmount, flip } =
-    useCoinflip();
+  const { status, amount, win, txid, setAmount, flip, reset } = useCoinflip();
   return (
     <>
       <Head>
@@ -66,14 +65,17 @@ export default function Home() {
                       className={`${styles.div4} ${styles.wide_button} ${
                         status == "deciding" && styles.button_disabled
                       }`}
-                      onClick={() => flip()}
+                      onClick={() => {
+                        if(status == 'completed') return reset();
+                        flip();
+                      }}
                     >
                       {status == "deciding" ? (
                         <>
                           <SkewLoader color="black" />
                         </>
                       ) : (
-                        <>DOUBLE OR NOTHING</>
+                        <>{status == "completed" ? 'NICE' : 'DOUBLE OR NOTHING'}</>
                       )}
                     </div>
                   </div>
